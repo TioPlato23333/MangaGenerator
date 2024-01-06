@@ -1,7 +1,7 @@
 # MangaGenerator
 ## Overview
 
-This is a manga generator.
+Generate mange-style avatar from a photo.
 
 ### How to use it
 
