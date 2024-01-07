@@ -6,18 +6,23 @@ from io import BytesIO
 from diffusers import StableDiffusionImg2ImgPipeline
 
 device = 'cuda'
-model_id_or_path = 'runwayml/stable-diffusion-v1-5'
-pipe = StableDiffusionImg2ImgPipeline.from_pretrained(model_id_or_path, torch_dtype=torch.float16)
+model_id_or_path = 'model/manmaruMix_v30.safetensors'
+pipe = StableDiffusionImg2ImgPipeline.from_single_file(model_id_or_path, torch_dtype=torch.float16, \
+    use_safetensors=True)
 pipe = pipe.to(device)
 
+'''
 url = 'https://raw.githubusercontent.com/CompVis/stable-diffusion/main/assets/stable-samples/' \
       'img2img/sketch-mountains-input.jpg'
 
 response = requests.get(url)
 init_image = Image.open(BytesIO(response.content)).convert('RGB')
 init_image = init_image.resize((768, 512))
+'''
+init_image = Image.open('test.jpg').convert('RGB')
 
-prompt = 'A fantasy landscape, trending on artstation'
+# prompt = 'A fantasy landscape, trending on artstation'
+prompt = 'A photo'
 
 images = pipe(prompt=prompt, image=init_image, strength=0.75, guidance_scale=7.5).images
-images[0].save('fantasy_landscape.png')
+images[0].save('test_output.png')
